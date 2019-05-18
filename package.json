@@ -1,0 +1,18 @@
+{
+  "name": "customer-base",
+  "version": "1.0.0",
+  "description": "A simple demonstration of a GraphQL server",
+  "main": "server.js",
+  "repository": "git@github.com:charlesmartinreed/graphql-server-demo.git",
+  "author": "charlesmartinreed <charlesmartinreed@icloud.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "express": "^4.17.0",
+    "express-graphql": "^0.8.0",
+    "nodemon": "^1.19.0"
+  },
+  "scripts": {
+    "start": "yarn server"
+  }
+}
