@@ -1,4 +1,5 @@
 // query responses, mutations, etc.
+const axios = require("axios");
 
 const {
   //bring in types
@@ -11,11 +12,11 @@ const {
 } = require("graphql");
 
 // DUMMY DATA FOR TESTING //
-const customers = [
-  { id: 1, name: "Jane Doe", email: "jdoe@gmail.com", age: 35 },
-  { id: 2, name: "Maya Doe", email: "mdoe@gmail.com", age: 21 },
-  { id: 3, name: "Billy Doe", email: "bdoe@gmail.com", age: 9 }
-];
+// const customers = [
+//   { id: 1, name: "Jane Doe", email: "jdoe@gmail.com", age: 35 },
+//   { id: 2, name: "Maya Doe", email: "mdoe@gmail.com", age: 21 },
+//   { id: 3, name: "Billy Doe", email: "bdoe@gmail.com", age: 9 }
+// ];
 
 // Custom Types
 const CustomerType = new GraphQLObjectType({
@@ -41,18 +42,25 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve(parentValue, args) {
         // handle the response by looping through the users and finding the matching customer - testing with hardcoded dummy data
-        for (let i = 0; i < customers.length; i++) {
-          if (customers[i].id == args.id) {
-            return customers[i];
-          }
-        }
+        // for (let i = 0; i < customers.length; i++) {
+        //   if (customers[i].id == args.id) {
+        //     return customers[i];
+        //   }
+        // }
+
+        // axios request here - returns a promise, which we convert to data
+        return axios
+          .get(`http://localhost:3000/customers/${args.id}`)
+          .then(res => res.data);
       }
     },
     customers: {
       type: new GraphQLList(CustomerType),
       resolve(parentValue, args) {
         // no args needed because we're not fetching by a specific query
-        return customers;
+        return axios
+          .get("http://localhost:3000/customers")
+          .then(res => res.data);
       }
     }
   }
