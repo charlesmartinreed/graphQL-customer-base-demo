@@ -42,10 +42,17 @@ const RootQuery = new GraphQLObjectType({
       resolve(parentValue, args) {
         // handle the response by looping through the users and finding the matching customer - testing with hardcoded dummy data
         for (let i = 0; i < customers.length; i++) {
-          if (customer[i].id === args.id) {
+          if (customers[i].id == args.id) {
             return customers[i];
           }
         }
+      }
+    },
+    customers: {
+      type: new GraphQLList(CustomerType),
+      resolve(parentValue, args) {
+        // no args needed because we're not fetching by a specific query
+        return customers;
       }
     }
   }
